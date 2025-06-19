@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Item</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  <h1>Adicionar Item</h1>
+
+  <form method="POST">
+    <label>Título do Item: <input type="text" name="title" required></label><br>
+    <button type="submit">Criar</button>
+  </form>
+
+  <p><a href="{{ url_for('index') }}">Voltar</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><meta charset="UTF-8"><title>Login</title></head>
+<body>
+
+  //essa parte ja ta certa, não mexe, fiz o titulo e um aviso aqui
+
+  <h1>Login</h1>
+  <p>Por favor, insira suas credenciais para acessar sua conta.</p>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div style="color:red;">
+        {% for category, message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  //faz o formulario pra login
+  
+  //faz uma mensagem daquelas "não tem conta? registre-se aqui blabla"
+
+</body>
+</html>

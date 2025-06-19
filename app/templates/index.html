@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Início</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  //mensagem de bem vindo talvez?
+  <h1>Bem-vinda! 🦋</h1>
+
+  //esse eu vou deixar aqui pq eu sei q funciona, não mexe, é um aviso caso o item seja criado, aproveitei q ja tinha feito o add_item 
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div id="flash-message" style="color:green;">
+        {% for category, message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      <script>
+        setTimeout(() => {
+          document.getElementById('flash-message').style.display = 'none';
+        }, 2000);
+      </script>
+    {% endif %}
+  {% endwith %}
+
+  // faz um botão de sair (logout aqui)
+  // e um adicionar item
+
+  //ai aqui faz uma lista dos items 
+  
+
+</body>
+</html>

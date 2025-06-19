@@ -1,0 +1,27 @@
+hello, deixei comentarios pra Julia nos index e login, só são 4 arquivos então fiz 2 q são os de adicionar item e registrar usuario
+
+e Lu, se puder fazer um cabeçalho e uns css bonitinho agradeço, ja q vc queria isso, é, provavelmente vc vai ter q esperar a julia fazer o back antes, ai vc vai poder decorar
+no cabeçalho minha unica requisição é ter o botão sair nele blz?
+
+aqui as rotas pras paginas e o logout q tem
+
+não pus nome pq são autoexplicativos
+
+href="{{ url_for('index') }}"
+href="{{ url_for('login') }}"
+href="{{ url_for('logout') }}"
+href="{{ url_for('register') }}"
+href="{{ url_for('add_item') }}"
+
+ss vcs vão precisar do docker, assim q intalarem pra rodar o projeto é assim
+
+docker-compose up -d --build
+
+ai vocês podem acessar o site em http://localhost:8080
+e o banco de dados vai estar emhttp://localhost:8081
+
+vou deixar umas fotos aqui pra verem como é
+
+ah é se quiserem remover tudo do docker da um 
+
+docker-compose down
