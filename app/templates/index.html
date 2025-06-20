@@ -106,7 +106,17 @@
     {% endwith %}
 
   </main>
-
+  <h2>Seus Itens:</h2>
+  {% if itens %}
+    <ul>
+      {% for item in itens %}
+        <li>{{ item.nome }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Você ainda não adicionou nenhum item.</p>
+  {% endif %}
+  
 </body>
 
 </html>
