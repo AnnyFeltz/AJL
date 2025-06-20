@@ -17,6 +17,12 @@ body {
   width: 100%;
   max-width: 400px;
 }
+.title {
+  text-align: center;
+  color: #333; /* preto suave */
+  margin-bottom: 1.8rem;
+  font-size: 2rem;
+}
 
 .title {
   text-align: center;
