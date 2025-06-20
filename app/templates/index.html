@@ -2,37 +2,111 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Início</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    header {
+      background-color: rgba(118, 75, 162, 0.85);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      font-weight: 600;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 0 0 12px 12px;
+      gap: 1rem;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      background-color: #5a3d84;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    header a:hover {
+      background-color: #3e2a5c;
+      transform: translateY(-2px);
+    }
+
+    main {
+      padding: 100px 20px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+    }
+
+    #flash-message {
+      display: inline-block;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(21, 87, 36, 0.25);
+      margin-bottom: 1.5rem;
+      animation: fadeOut 2s ease forwards;
+      animation-delay: 2s;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateY(-10px);
+        height: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  //mensagem de bem vindo talvez?
-  <h1>Bem-vinda! 🦋</h1>
+  <header>
+    <a href="{{ url_for('add_item') }}">Adicionar Item</a>
+    <a href="{{ url_for('logout') }}">Sair</a>
+  </header>
 
-  //esse eu vou deixar aqui pq eu sei q funciona, não mexe, é um aviso caso o item seja criado, aproveitei q ja tinha feito o add_item 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <div id="flash-message" style="color:green;">
-        {% for category, message in messages %}
-          <p>{{ message }}</p>
-        {% endfor %}
-      </div>
-      <script>
-        setTimeout(() => {
-          document.getElementById('flash-message').style.display = 'none';
-        }, 2000);
-      </script>
-    {% endif %}
-  {% endwith %}
+  <main>
+    <h1>Bem-vinda! 🦋</h1>
 
-  // faz um botão de sair (logout aqui)
-  // e um adicionar item
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div id="flash-message">
+          {% for category, message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        <script>
+          setTimeout(() => {
+            const flash = document.getElementById('flash-message');
+            if (flash) flash.style.animationPlayState = 'running';
+            setTimeout(() => { if(flash) flash.style.display = 'none'; }, 2000);
+          }, 2000);
+        </script>
+      {% endif %}
+    {% endwith %}
 
-  //ai aqui faz uma lista dos items 
-  
+  </main>
 
 </body>
+
 </html>
