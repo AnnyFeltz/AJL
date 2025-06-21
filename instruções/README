@@ -30,3 +30,43 @@ docker-compose down
 o docker nao rodou de jeito nenhum, entao provavelmente o problema e o9 noote msm
 entao eu so mexi no codigo, mas nao sei se ta funcionando (é pra ta pq ébem simples)
 se precisar arrumar eu arrumo (so depois de umas 15hrs pq to terminado de tentar fazer essa merda funcionaar faz mt tempo  E É TIPO 05:18 ksksksksksksksksksksksks)
+---
+
+Codigos pro mysql
+
+docker exec -it mysql_db mysql -u root -p
+senha: root
+
+USE simples_api;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255)
+);
+
+CREATE TABLE items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+USE simples_api;
+
+INSERT INTO users (name, email, password) VALUES 
+('Usuário 1', 'usuario1@gmail.com', 'senha123'),
+('Usuário 2', 'usuario2@gmail.com', '123senha');
+
+INSERT INTO items (title, user_id) VALUES
+('Livro "1984"', 1),
+('Caneca de café', 1),
+('Caderno de anotações', 1),
+('Fones de ouvido', 1),
+('Mochila preta', 1),
+('Celular Samsung', 2),
+('Óculos de sol', 2),
+('Tênis esportivo', 2),
+('Garrafa de água', 2),
+('Relógio de pulso', 2);
