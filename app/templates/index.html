@@ -89,34 +89,58 @@
     <h1>Bem-vinda! 🦋</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div id="flash-message">
-          {% for category, message in messages %}
-            <p>{{ message }}</p>
-          {% endfor %}
-        </div>
-        <script>
-          setTimeout(() => {
-            const flash = document.getElementById('flash-message');
-            if (flash) flash.style.animationPlayState = 'running';
-            setTimeout(() => { if(flash) flash.style.display = 'none'; }, 2000);
-          }, 2000);
-        </script>
-      {% endif %}
+    {% if messages %}
+    <div id="flash-message">
+      {% for category, message in messages %}
+      <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+    <script>
+      setTimeout(() => {
+        const flash = document.getElementById('flash-message');
+        if (flash) flash.style.animationPlayState = 'running';
+        setTimeout(() => { if (flash) flash.style.display = 'none'; }, 2000);
+      }, 2000);
+    </script>
+    {% endif %}
     {% endwith %}
 
   </main>
   <h2>Seus Itens:</h2>
   {% if items %}
-    <ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Descrição</th>
+        <th>Check</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for item in items %}
-        <li>{{ item[1] }}</li>
+      <tr>
+        <td>
+          <strong {% if item[3] %}style="text-decoration: line-through; color: gray;"{% endif %}>
+            {{ item[1] }}
+          </strong>
+        </td>
+        <td>
+          <small>{{ item[2] }}</small>
+        </td>
+        <td style="text-align:center;">
+          <form method="POST" action="{{ url_for('toggle_item', item_id=item[0]) }}"></form>
+            <input type="checkbox" name="comprado" onchange="this.form.submit()" {% if item[3] %}checked{% endif %}>
+          </form>
+        </td>
+      </tr>
       {% endfor %}
-    </ul>
+    </tbody>
+  </table>
+
   {% else %}
-    <p>Você ainda não adicionou nenhum item.</p>
+  <p>Você ainda não adicionou nenhum item.</p>
   {% endif %}
-  
+
 </body>
 
 </html>

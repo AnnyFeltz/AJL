@@ -43,7 +43,7 @@ def index():
         return redirect(url_for('login'))
 
     cursor = get_cursor()
-    cursor.execute("SELECT id, title FROM items WHERE user_id = %s", (session['user_id'],))
+    cursor.execute("SELECT id, nome, quantidade, comprado FROM items WHERE user_id = %s", (session['user_id'],))
     items = cursor.fetchall()
     cursor.close()
 
@@ -117,5 +117,24 @@ def add_item():
 
     return render_template('add_item.html')
 
+@app.route('/toggle/<int:item_id>', methods=['POST'])
+def toggle_item(item_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    cursor = get_cursor()
+    # Pega valor atual
+    cursor.execute("SELECT comprado FROM items WHERE id=%s AND user_id=%s", (item_id, session['user_id']))
+    item = cursor.fetchone()
+
+    if item:
+        novo_estado = not item[0]
+        cursor.execute("UPDATE items SET comprado=%s WHERE id=%s", (novo_estado, item_id))
+        get_db().commit()
+
+    cursor.close()
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+    
