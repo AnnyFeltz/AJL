@@ -6,76 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Início</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  <style>
-    header {
-      background-color: rgba(118, 75, 162, 0.85);
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      font-weight: 600;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      border-radius: 0 0 12px 12px;
-      gap: 1rem;
-    }
-
-    header a {
-      color: white;
-      text-decoration: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      background-color: #5a3d84;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    header a:hover {
-      background-color: #3e2a5c;
-      transform: translateY(-2px);
-    }
-
-    main {
-      padding: 100px 20px 20px;
-      max-width: 600px;
-      margin: 0 auto;
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-    }
-
-    #flash-message {
-      display: inline-block;
-      background-color: #d4edda;
-      border: 1px solid #c3e6cb;
-      color: #155724;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(21, 87, 36, 0.25);
-      margin-bottom: 1.5rem;
-      animation: fadeOut 2s ease forwards;
-      animation-delay: 2s;
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: translateY(-10px);
-        height: 0;
-        margin-bottom: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-        overflow: hidden;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -86,62 +16,60 @@
   </header>
 
   <main>
-    <h1>Bem-vinda! 🦋</h1>
+    <h1>Bem-vindo(a)! 🦋</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div id="flash-message">
-      {% for category, message in messages %}
-      <p>{{ message }}</p>
-      {% endfor %}
-    </div>
-    <script>
-      setTimeout(() => {
-        const flash = document.getElementById('flash-message');
-        if (flash) flash.style.animationPlayState = 'running';
-        setTimeout(() => { if (flash) flash.style.display = 'none'; }, 2000);
-      }, 2000);
-    </script>
-    {% endif %}
+      {% if messages %}
+        <div id="flash-message">
+          {% for category, message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        <script>
+          setTimeout(() => {
+            const flash = document.getElementById('flash-message');
+            if (flash) flash.style.animationPlayState = 'running';
+            setTimeout(() => { if (flash) flash.style.display = 'none'; }, 2000);
+          }, 2000);
+        </script>
+      {% endif %}
     {% endwith %}
-
   </main>
-  <h2>Seus Itens:</h2>
-  {% if items %}
-  <table>
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Descrição</th>
-        <th>Check</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in items %}
-      <tr>
-        <td>
-          {% set comprado = item[3] == 1 %}
-          <strong {% if comprado %}style="text-decoration: line-through; color: gray;" {% endif %}>
-            {{ item[1] }}
-          </strong>
-        </td>
-        <td>
-          <small>{{ item[2] }}</small>
-        </td>
-        <td style="text-align:center;">
-          <form method="POST" action="{{ url_for('toggle_item', item_id=item[0]) }}">
-            <input type="checkbox" name="comprado" onchange="this.form.submit()" {% if comprado %}checked{% endif %}>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <p>Você ainda não adicionou nenhum item.</p>
-  {% endif %}
 
+  <div class="produto-section">
+    <h2>🛒 Seus Itens</h2>
+
+    {% if items %}
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Descrição</th>
+          <th> ✓ </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr {% if item[3] == 1 %}class="comprado"{% endif %}>
+          <td>
+            <strong>{{ item[1] }}</strong>
+          </td>
+          <td>
+            <small>{{ item[2] }}</small>
+          </td>
+          <td>
+            <form method="POST" action="{{ url_for('toggle_item', item_id=item[0]) }}">
+              <input type="checkbox" name="comprado" onchange="this.form.submit()" {% if item[3] == 1 %}checked{% endif %}>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="nenhum-item">Você ainda não adicionou nenhum item.</p>
+    {% endif %}
+  </div>
 
 </body>
-
 </html>
