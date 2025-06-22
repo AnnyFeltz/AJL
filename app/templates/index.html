@@ -120,7 +120,8 @@
       {% for item in items %}
       <tr>
         <td>
-          <strong {% if item[3] %}style="text-decoration: line-through; color: gray;"{% endif %}>
+          {% set comprado = item[3] == 1 %}
+          <strong {% if comprado %}style="text-decoration: line-through; color: gray;" {% endif %}>
             {{ item[1] }}
           </strong>
         </td>
@@ -128,18 +129,18 @@
           <small>{{ item[2] }}</small>
         </td>
         <td style="text-align:center;">
-          <form method="POST" action="{{ url_for('toggle_item', item_id=item[0]) }}"></form>
-            <input type="checkbox" name="comprado" onchange="this.form.submit()" {% if item[3] %}checked{% endif %}>
+          <form method="POST" action="{{ url_for('toggle_item', item_id=item[0]) }}">
+            <input type="checkbox" name="comprado" onchange="this.form.submit()" {% if comprado %}checked{% endif %}>
           </form>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-
   {% else %}
   <p>Você ainda não adicionou nenhum item.</p>
   {% endif %}
+
 
 </body>
 

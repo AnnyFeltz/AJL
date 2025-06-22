@@ -107,9 +107,11 @@ def add_item():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        title = request.form['title']
+        nome = request.form['nome']
+        quantidade = request.form['quantidade']
         cursor = get_cursor()
-        cursor.execute("INSERT INTO items (title, user_id) VALUES (%s, %s)", (title, session['user_id']))
+        cursor.execute("INSERT INTO items (nome, quantidade, user_id) VALUES (%s, %s, %s)", (nome, quantidade, session['user_id']))
+
         get_db().commit()
         cursor.close()
         flash('Item adicionado com sucesso!')
