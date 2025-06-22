@@ -1,0 +1,40 @@
+docker-compose up -d --build 
+docker exec -it mysql_db mysql -u root -p
+senha: root
+
+se quiser pelo terminal: (recomendo ir pela web pq o terminal é bugado, pelo menos pra nós foi)
+
+USE simples_api;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255)
+);
+
+CREATE TABLE items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  quantidade VARCHAR(50),
+  comprado BOOLEAN DEFAULT FALSE,
+  user_id INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+INSERT INTO users (name, email, password) VALUES 
+('Usuário 1', 'usuario1@gmail.com', 'senha123'),
+('Usuário 2', 'usuario2@gmail.com', '123senha');
+
+INSERT INTO items (nome, quantidade, comprado, user_id) VALUES
+('Arroz', '2 kg', false, 1),
+('Feijão preto', '1 kg', false, 1),
+('Macarrão espaguete', '3 unidades', false, 1),
+('Molho de tomate', '2 sachês', true, 1),
+('Detergente', '5 frascos', false, 1),
+('Papel higiênico', '12 rolos', true, 2),
+('Shampoo', '1 frasco', false, 2),
+('Escova de dentes', '2 unidades', true, 2),
+('Sabonete', '6 unidades', false, 2),
+('Desodorante', '2 frascos', true, 2);
